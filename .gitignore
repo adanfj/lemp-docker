@@ -1,0 +1,8 @@
+node_modules
+vendor
+/cert
+*lock*
+.htaccess
+.env*
+/log
+.git
