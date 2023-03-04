@@ -1,0 +1,81 @@
+version: '3.9'
+
+services:
+
+  # admin:
+  #   image: phpmyadmin:fpm-alpine
+  #   ports:
+  #     - 8080:8080
+  #     - 8000:8000
+  #   environment:
+  #     - PMA_ARBITRARY=1
+  #   depends_on:
+  #     - db
+  # db:
+  #   image: mariadb
+  #   environment:
+  #     MARIADB_ROOT_PASSWORD: abc123.
+  #   volumes:
+  #     - db:/var/lib/mysql
+# docker run -v "./lamp:/app" -v "./cert:/etc/letsencrypt" -v "./log/cert:/var/log/letsencrypt" -it certbot/certbot certonly -v --reinstall --manual --preferred-challenges=dns -d *.adanfj.dedyn.io --staging --email a21adanff@iessanclemente.net --agree-tos --force-renewal --no-eff-email
+  # cert:
+  #   image: certbot/certbot
+  #   # restart: unless-stopped
+  #   # entrypoint:
+  #   #         - 'rm -Rf /etc/letsencrypt/live/* && rm -Rf /etc/letsencrypt/archive/* && rm -Rf /etc/letsencrypt/renewal/*'
+  #   command: >-
+  #     certonly -v --reinstall --manual --preferred-challenges=dns -d *.adanfj.dedyn.io --staging --email a21adanff@iessanclemente.net --agree-tos --force-renewal --no-eff-email
+  #   volumes:
+  #     - ./lamp:/app
+  #     - ./cert:/etc/letsencrypt
+  #     - ./log/cert:/var/log/letsencrypt
+  #   depends_on:
+  #     - server
+
+  server:
+    image: nginx:alpine
+    restart: unless-stopped
+    volumes:
+      - ./app:/app/symfony
+      - ./lamp:/var/www/html
+      - ./nginx:/etc/nginx/conf.d/
+      - ./log/nginx:/var/log/nginx/
+      - ./cert:/etc/letsencrypt
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - php-fpm
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: core-php
+    image: lemp-php-ext
+    restart: unless-stopped
+    volumes:
+      - ./lamp:/var/www/html
+      - ./config/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    # depends_on:
+    #   - db
+
+  web-symfony:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: deploy-symfony
+    environment:
+      MARIADB_HOST: db4free.net
+      MARIADB_PORT_NUMBER: 3306
+      MARIADB_USER: adanfj
+      MARIADB_PASSWORD: 1q2w3e4r5t6y
+      MARIADB_DATABASE: symfony
+    volumes:
+      - ./app:/app
+    # depends_on:
+    #   - db
+
+volumes:
+  db:
+  mysql:
