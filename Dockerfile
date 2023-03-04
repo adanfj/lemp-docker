@@ -21,8 +21,9 @@ CMD \
     #  composer require encore &&\
      composer require symfony/twig-bundle && composer require symfony/asset &&\
     #  bun i &&\
-     chmod -R 777 . &&\
-     symfony serve
+     rm -rf .git && chmod -R 777 . 
+    #  &&\
+    #  symfony serve
 
 FROM php:fpm as core-php
 RUN apt-get update
