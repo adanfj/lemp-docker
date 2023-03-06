@@ -16,14 +16,16 @@ RUN git config --global user.name "Your Name"
 WORKDIR /var/www/html
 CMD \
 # . $NVM_DIR/nvm.sh && \
-     chmod -R 777 /opt/bitnami/php/var/run &&\
-     git clone https://github.com/brunosct/symfony1 symfony && \
+    chmod -R 777 /opt/bitnami/php/var/run &&\
+    # rm -rf symfony && \
+    # git clone https://github.com/brunosct/symfony1 symfony && rm -rf symfony/db \
+    #  && mv symfony/symfony/* symfony  \
     #  ( [ -d "symfony/vendor" ] || symfony new --webapp symfony )&&\
-     cd symfony &&\
+     cd symfony \
     #  composer require encore &&\
     #  composer require symfony/twig-bundle && composer require symfony/asset &&\
-    #  bun i &&\
-     rm -rf .git && chmod -R 777 . && \
+    #  bun i && rm -rf symfony/symfony  \
+    && chmod -R 777 . && rm -rf .git && \
     symfony serve
 
 FROM php:fpm AS core-php

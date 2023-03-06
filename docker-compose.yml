@@ -17,6 +17,7 @@ services:
       MARIADB_ROOT_PASSWORD: abc123.
     volumes:
       - db:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb-d/
   # docker run -v "./lamp:/app" -v "./cert:/etc/letsencrypt" -v "./log/cert:/var/log/letsencrypt" -it certbot/certbot certonly -v --reinstall --manual --preferred-challenges=dns -d *.adanfj.dedyn.io --staging --email a21adanff@iessanclemente.net --agree-tos --force-renewal --no-eff-email
   # cert:
   #   image: certbot/certbot
