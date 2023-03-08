@@ -26,12 +26,12 @@ CMD \
     #  composer require symfony/twig-bundle && composer require symfony/asset &&\
     #  bun i && rm -rf symfony/symfony  \
     && chmod -R 777 . && rm -rf .git && \
-    symfony serve
+    composer install && symfony serve
 
 FROM php:fpm AS core-php
-RUN apt-get update
+RUN apt update
 
-RUN apt-get install -y curl
+RUN apt install -y curl
 RUN apt install -y libcurl4-openssl-dev 
 RUN apt install -y libssl-dev 
 RUN apt install -y libzip-dev 
