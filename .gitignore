@@ -8,3 +8,4 @@ vendor
 .git
 *.dev*
 config/symfony
+db/*/

@@ -1,7 +1,6 @@
 version: '3.9'
 
 services:
-
   server:
     image: nginx:alpine
     restart: unless-stopped
@@ -26,23 +25,16 @@ services:
     volumes:
       - ./lamp:/var/www/html
       # - ./config/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-    depends_on:
-      - db
 
   web-symfony:
     build:
       context: .
       dockerfile: Dockerfile
       target: deploy-symfony
-    environment:
-      MARIADB_HOST: db4free.net
-      MARIADB_PORT_NUMBER: 3306
-      MARIADB_USER: adanfj
-      MARIADB_PASSWORD: 1q2w3e4r5t6y
-      MARIADB_DATABASE: symfony
     volumes:
       - ./lamp:/var/www/html
       - ./config/symfony/prod/.env:/var/www/html/symfony/.env
-    # ports:
-    #   - 8000:8000
 
+volumes:
+  db:
+  mysql:

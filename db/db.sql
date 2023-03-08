@@ -20,6 +20,11 @@
 --
 
 DROP TABLE IF EXISTS `symfony_demo_comment`;
+DROP TABLE IF EXISTS `symfony_demo_post`;
+DROP TABLE IF EXISTS `symfony_demo_post_tag`;
+DROP TABLE IF EXISTS `symfony_demo_tag`;
+DROP TABLE IF EXISTS `symfony_demo_user`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `symfony_demo_comment` (
@@ -50,7 +55,6 @@ UNLOCK TABLES;
 -- Table structure for table `symfony_demo_post`
 --
 
-DROP TABLE IF EXISTS `symfony_demo_post`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `symfony_demo_post` (
@@ -81,7 +85,6 @@ UNLOCK TABLES;
 -- Table structure for table `symfony_demo_post_tag`
 --
 
-DROP TABLE IF EXISTS `symfony_demo_post_tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `symfony_demo_post_tag` (
@@ -109,7 +112,7 @@ UNLOCK TABLES;
 -- Table structure for table `symfony_demo_tag`
 --
 
-DROP TABLE IF EXISTS `symfony_demo_tag`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `symfony_demo_tag` (
@@ -134,7 +137,6 @@ UNLOCK TABLES;
 -- Table structure for table `symfony_demo_user`
 --
 
-DROP TABLE IF EXISTS `symfony_demo_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `symfony_demo_user` (
