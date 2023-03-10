@@ -1,0 +1,77 @@
+version: '3.9'
+
+services:
+
+  admin:
+    image: phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+    depends_on:
+      - db
+  db:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: abc123.
+      MARIADB_DATABASE: mysql
+    volumes:
+      - ./db/mariadb:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d/
+      
+  # docker run -v "./lamp:/app" -v "./cert:/etc/letsencrypt" -v "./log/cert:/var/log/letsencrypt" -it certbot/certbot certonly -v --reinstall --manual --preferred-challenges=dns -d *.adanfj.dedyn.io --staging --email a21adanff@iessanclemente.net --agree-tos --force-renewal --no-eff-email
+  # cert:
+  #   image: certbot/certbot
+  #   # restart: unless-stopped
+  #   # entrypoint:
+  #   #         - 'rm -Rf /etc/letsencrypt/live/* && rm -Rf /etc/letsencrypt/archive/* && rm -Rf /etc/letsencrypt/renewal/*'
+  #   command: >-
+  #     certonly -v --reinstall --manual --preferred-challenges=dns -d *.adanfj.dedyn.io --staging --email a21adanff@iessanclemente.net --agree-tos --force-renewal --no-eff-email
+  #   volumes:
+  #     - ./lamp:/app
+  #     - ./cert:/etc/letsencrypt
+  #     - ./log/cert:/var/log/letsencrypt
+  #   depends_on:
+  #     - server
+
+  server:
+    image: nginx:alpine
+    restart: unless-stopped
+    volumes:
+      - ./lamp:/var/www/html
+      - ./cert:/etc/letsencrypt
+      - ./config/nginx:/etc/nginx/conf.d/
+      - ./log/nginx:/var/log/nginx/
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - php-fpm
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: core-php
+    image: lemp-php-ext
+    restart: unless-stopped
+    volumes:
+      - ./lamp:/var/www/html
+      # - ./config/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    depends_on:
+      - db
+
+  web-symfony:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deploy-symfony
+    volumes:
+      - ./lamp:/var/www/html
+      - ./config/symfony/dev/.env:/var/www/html/symfony/.env
+    # ports:
+    #   - 8000:8000
+    depends_on:
+      - db
+
+volumes:
+  db:
+  mysql:

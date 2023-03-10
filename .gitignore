@@ -6,6 +6,6 @@ vendor
 .env*
 /log
 .git
-*.dev*
-config/symfony
+# *.dev*
+# config/symfony
 db/*/
