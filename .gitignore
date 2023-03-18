@@ -3,7 +3,7 @@ vendor
 /cert
 *lock*
 .htaccess
-.env*
+
 /log
 .git
 # *.dev*
