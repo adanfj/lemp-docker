@@ -9,3 +9,4 @@ vendor
 # *.dev*
 # config/symfony
 db/*/
+*.zip
