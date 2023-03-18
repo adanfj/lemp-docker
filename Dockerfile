@@ -9,8 +9,7 @@ RUN apt install -y symfony-cli
 RUN git config --global user.email "you@example.com"
 RUN git config --global user.name "Your Name"
 WORKDIR /var/www/html
-CMD \
-    chmod -R 777 /opt/bitnami/php/var/run &&\
+CMD chmod -R 777 /opt/bitnami/php/var/run &&\
      cd symfony \
     && chmod -R 777 . && rm -rf .git && \
     composer install && symfony serve
