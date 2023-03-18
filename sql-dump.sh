@@ -1,1 +1,0 @@
-docker exec some-mysql sh -c 'exec mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > $1 # O argumento $1 é a dirección onde se gardará o dump
